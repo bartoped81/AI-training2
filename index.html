@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="cs" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Firemní Akcelerátor</title>
+    
+    <!-- Tailwind CSS (pro stylování) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons (pro ikonky) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Font (Urbanist nebo Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        /* Animace pro akordeon */
+        .accordion-content {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out, padding 0.3s ease;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .accordion-content.open {
+            max-height: 500px; /* Dostatečná výška */
+            opacity: 1;
+        }
+        .chevron { transition: transform 0.3s ease; }
+        .chevron.rotate { transform: rotate(180deg); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 selection:bg-indigo-500 selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-slate-900/95 backdrop-blur-sm z-50 border-b border-slate-700 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <i data-lucide="brain" class="h-8 w-8 text-indigo-400"></i>
+                    <span class="font-bold text-xl tracking-tight">AI Akcelerátor</span>
+                </div>
+                <div class="hidden md:flex space-x-8 text-sm font-medium">
+                    <a href="#pro-koho" class="hover:text-indigo-400 transition-colors">Pro koho</a>
+                    <a href="#vystupy" class="hover:text-indigo-400 transition-colors">Co získáte</a>
+                    <a href="#program" class="hover:text-indigo-400 transition-colors">Program</a>
+                    <a href="#cena" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-full transition-colors">Rezervovat místo</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-slate-900 text-white overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2565&auto=format&fit=crop')] bg-cover bg-center opacity-10"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-900/90 to-slate-900"></div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+            
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center px-4 py-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-sm font-medium mb-8">
+                    <span class="flex h-2 w-2 rounded-full bg-indigo-400 mr-2 animate-pulse"></span>
+                    2denní praktický trénink
+                </div>
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight">
+                    Dělejte větší cirkus <br/>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">
+                        za méně peněz.
+                    </span>
+                </h1>
+            </div>
+
+            <!-- Grid: Graf vs Text -->
+            <div class="grid lg:grid-cols-2 gap-10 items-center max-w-6xl mx-auto mb-12">
+                
+                <!-- Sloupec 1: Graf -->
+                <div class="bg-white/95 backdrop-blur-sm p-6 rounded-2xl shadow-2xl border border-slate-700/30 text-slate-800">
+                    <h3 class="text-center font-bold text-lg mb-1">Úspora času týdně (hodiny)</h3>
+                    <p class="text-center text-xs text-slate-500 mb-6">Srovnání tradiční práce vs. po absolvování kurzu</p>
+                    
+                    <!-- Chart Area -->
+                    <div class="relative h-64 w-full border-b border-l border-slate-200 mt-4 pl-2">
+                        
+                        <!-- Grid Lines (Background) -->
+                        <div class="absolute inset-0 flex flex-col justify-between pointer-events-none">
+                            <div class="border-t border-slate-100 w-full h-0"></div>
+                            <div class="border-t border-slate-100 w-full h-0"></div>
+                            <div class="border-t border-slate-100 w-full h-0"></div>
+                            <div class="border-t border-slate-100 w-full h-0"></div>
+                            <div class="border-t border-slate-100 w-full h-0"></div>
+                        </div>
+
+                        <!-- Y Axis Labels -->
+                        <div class="absolute -left-6 top-0 h-full flex flex-col justify-between text-[10px] text-slate-400">
+                            <span>10h</span>
+                            <span>7.5h</span>
+                            <span>5h</span>
+                            <span>2.5h</span>
+                            <span>0h</span>
+                        </div>
+
+                        <!-- Bars Container -->
+                        <div class="absolute inset-0 flex items-end justify-around px-2 pt-4">
+                            
+                            <!-- Group: Marketing -->
+                            <div class="flex flex-col items-center gap-1 w-1/6 h-full justify-end group">
+                                <div class="flex items-end justify-center w-full gap-1 h-full">
+                                    <!-- Old -->
+                                    <div class="w-1/2 bg-slate-300 rounded-t-sm relative transition-all hover:bg-slate-400" style="height: 80%;">
+                                        <span class="absolute -top-5 left-1/2 -translate-x-1/2 text-[10px] font-bold text-slate-400">8h</span>
+                                    </div>
+                                    <!-- New -->
+                                    <div class="w-1/2 bg-indigo-600 rounded-t-sm relative shadow-md shadow-indigo-500/30" style="height: 10%;">
+                                        <span class="absolute -top-5 left-1/2 -translate-x-1/2 text-[10px] font-bold text-indigo-700">1h</span>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] sm:text-xs font-medium text-slate-600 mt-2 text-center leading-tight">Marketing</span>
+                            </div>
+
+                            <!-- Group: Obchod -->
+                            <div class="flex flex-col items-center gap-1 w-1/6 h-full justify-end group">
+                                <div class="flex items-end justify-center w-full gap-1 h-full">
+                                    <!-- Old -->
+                                    <div class="w-1/2 bg-slate-300 rounded-t-sm relative transition-all hover:bg-slate-400" style="height: 60%;">
+                                        <span class="absolute -top-5 left-1/2 -translate-x-1/2 text-[10px] font-bold text-slate-400">6h</span>
+                                    </div>
+                                    <!-- New -->
+                                    <div class="w-1/2 bg-indigo-600 rounded-t-sm relative shadow-md shadow-indigo-500/30" style="height: 15%;">
+                                        <span class="absolute -top-5 left-1/2 -translate-x-1/2 text-[10px] font-bold text-indigo-700">1.5h</span>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] sm:text-xs font-medium text-slate-600 mt-2 text-center leading-tight">Obchod</span>
+                            </div>
+
+                            <!-- Group: Realizace -->
+                            <div class="flex flex-col items-center gap-1 w-1/6 h-full justify-end group">
+                                <div class="flex items-end justify-center w-full gap-1 h-full">
+                                    <!-- Old -->
+                                    <div class="w-1/2 bg-slate-300 rounded-t-sm relative transition-all hover:bg-slate-400" style="height: 100%;">
+                                        <span class="absolute -top-5 left-1/2 -translate-x-1/2 text-[10px] font-bold text-slate-400">10h</span>
+                                    </div>
+                                    <!-- New -->
+                                    <div class="w-1/2 bg-indigo-600 rounded-t-sm relative shadow-md shadow-indigo-500/30" style="height: 20%;">
+                                        <span class="absolute -top-5 left-1/2 -translate-x-1/2 text-[10px] font-bold text-indigo-700">2h</span>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] sm:text-xs font-medium text-slate-600 mt-2 text-center leading-tight">Realizace</span>
+                            </div>
+
+                            <!-- Group: Data -->
+                            <div class="flex flex-col items-center gap-1 w-1/6 h-full justify-end group">
+                                <div class="flex items-end justify-center w-full gap-1 h-full">
+                                    <!-- Old -->
+                                    <div class="w-1/2 bg-slate-300 rounded-t-sm relative transition-all hover:bg-slate-400" style="height: 50%;">
+                                        <span class="absolute -top-5 left-1/2 -translate-x-1/2 text-[10px] font-bold text-slate-400">5h</span>
+                                    </div>
+                                    <!-- New -->
+                                    <div class="w-1/2 bg-indigo-600 rounded-t-sm relative shadow-md shadow-indigo-500/30" style="height: 5%;">
+                                        <span class="absolute -top-5 left-1/2 -translate-x-1/2 text-[10px] font-bold text-indigo-700">0.5h</span>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] sm:text-xs font-medium text-slate-600 mt-2 text-center leading-tight">Data</span>
+                            </div>
+
+                            <!-- Group: Finance -->
+                            <div class="flex flex-col items-center gap-1 w-1/6 h-full justify-end group">
+                                <div class="flex items-end justify-center w-full gap-1 h-full">
+                                    <!-- Old -->
+                                    <div class="w-1/2 bg-slate-300 rounded-t-sm relative transition-all hover:bg-slate-400" style="height: 40%;">
+                                        <span class="absolute -top-5 left-1/2 -translate-x-1/2 text-[10px] font-bold text-slate-400">4h</span>
+                                    </div>
+                                    <!-- New -->
+                                    <div class="w-1/2 bg-indigo-600 rounded-t-sm relative shadow-md shadow-indigo-500/30" style="height: 5%;">
+                                        <span class="absolute -top-5 left-1/2 -translate-x-1/2 text-[10px] font-bold text-indigo-700">0.5h</span>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] sm:text-xs font-medium text-slate-600 mt-2 text-center leading-tight">Finance</span>
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                    <!-- Legend -->
+                    <div class="flex justify-center gap-6 mt-6 text-xs text-slate-600">
+                        <div class="flex items-center gap-2"><span class="w-4 h-4 bg-slate-300 rounded-sm"></span> Starý způsob</div>
+                        <div class="flex items-center gap-2"><span class="w-4 h-4 bg-indigo-600 rounded-sm shadow-sm"></span> S AI Akcelerátorem</div>
+                    </div>
+                </div>
+
+                <!-- Sloupec 2: Text -->
+                <div class="bg-slate-800/60 p-8 rounded-2xl border border-slate-700 backdrop-blur-md shadow-xl">
+                    <p class="text-sm md:text-base text-slate-300 leading-relaxed mb-3">
+                        Máte pocit, že vaše firma naráží na strop? Že byste mohli růst, ale nemáte na to kapacity?
+                    </p>
+                    <p class="text-sm md:text-base text-white font-medium leading-relaxed">
+                        Umělá inteligence vašim lidem rozváže ruce, aby stihli to, co dřív trvalo týden, za jedno odpoledne.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-4 text-center">
+                <a href="#cena" class="px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-lg font-bold rounded-lg shadow-lg shadow-indigo-600/30 transition-all transform hover:-translate-y-1 flex items-center justify-center">
+                    Chci zrychlit firmu <i data-lucide="arrow-right" class="ml-2 w-5 h-5"></i>
+                </a>
+                <a href="#program" class="px-8 py-4 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-lg font-medium rounded-lg transition-all">
+                    Prohlédnout agendu
+                </a>
+            </div>
+            
+            <p class="mt-12 text-slate-400 text-sm max-w-2xl mx-auto italic text-center">
+                "Tento kurz není o 'hraní si s obrázky'. Je to mapa vaší firmy, kde krok po kroku ukazujeme, jak AI zapojit do strategie, marketingu, obchodu, realizace i řízení lidí. Odcházíte s hotovým systémem, který v pondělí zavedete."
+            </p>
+        </div>
+    </section>
+
+    <!-- Target Audience Section -->
+    <section id="pro-koho" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-slate-900 sm:text-4xl">Pro koho je kurz určen?</h2>
+                <p class="mt-4 text-xl text-slate-600 max-w-3xl mx-auto">
+                    Kurz je připraven specificky pro dvě klíčové role ve středních a menších firmách:
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+                <!-- Audience Card 1 -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:border-indigo-300 transition-colors">
+                    <button onclick="toggleAccordion('aud-1')" class="w-full flex items-center justify-between p-5 text-left bg-white hover:bg-slate-50/50 transition-colors">
+                        <div class="flex items-center gap-4">
+                            <div class="p-3 rounded-lg bg-indigo-50 text-indigo-600 shrink-0">
+                                <i data-lucide="briefcase" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="text-lg md:text-xl font-bold text-slate-900">Majitelé a nejvyšší vedení</h3>
+                        </div>
+                        <div class="ml-4 shrink-0">
+                            <i data-lucide="chevron-down" id="icon-aud-1" class="w-5 h-5 text-slate-400 chevron"></i>
+                        </div>
+                    </button>
+                    <div id="aud-1" class="accordion-content px-5">
+                        <div class="pt-4 pb-6 border-t border-slate-100">
+                            <p class="text-slate-600 leading-relaxed text-base">
+                                Kteří potřebují strategický nadhled, chtějí firmu rozvíjet, ale topí se v každodenní operativě.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Audience Card 2 -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:border-indigo-300 transition-colors">
+                    <button onclick="toggleAccordion('aud-2')" class="w-full flex items-center justify-between p-5 text-left bg-white hover:bg-slate-50/50 transition-colors">
+                        <div class="flex items-center gap-4">
+                            <div class="p-3 rounded-lg bg-cyan-50 text-cyan-600 shrink-0">
+                                <i data-lucide="zap" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="text-lg md:text-xl font-bold text-slate-900">"Pravá ruka majitele" (Implementátoři)</h3>
+                        </div>
+                        <div class="ml-4 shrink-0">
+                            <i data-lucide="chevron-down" id="icon-aud-2" class="w-5 h-5 text-slate-400 chevron"></i>
+                        </div>
+                    </button>
+                    <div id="aud-2" class="accordion-content px-5">
+                        <div class="pt-4 pb-6 border-t border-slate-100">
+                            <p class="text-slate-600 leading-relaxed text-base">
+                                Provozní ředitelé, schopní manažeři nebo nástupci, kteří mají za úkol přinést do firmy inovaci, "odmakat" zavedení do praxe a naučit to ostatní.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center bg-slate-100 p-4 rounded-lg max-w-3xl mx-auto border border-slate-200">
+                <p class="text-slate-600 text-sm">
+                    (Poznámka: Kurz je vhodný i pro ty, kteří AI už používají, ale mají podezření, že využívají jen z malého procenta potenciálu nebo si nejsou jisti, jak s AI pracovat bezpečně.)
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Program Section -->
+    <section id="program" class="py-20 bg-slate-900 text-slate-50">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold sm:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400 uppercase tracking-wide">
+                    Struktura kurzu
+                </h2>
+                <p class="mt-4 text-xl text-slate-300 max-w-3xl mx-auto font-light">
+                    Kurz je postaven jako <span class="text-white font-semibold">průchod virtuální společností</span>. 
+                    Neřešíme nástroje izolovaně, ale aplikujeme je na životní cyklus zakázky a řízení firmy.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                
+                <!-- COLUMN 1 - DAY 1 -->
+                <div class="space-y-6">
+                    <div class="sticky top-16 z-10 bg-slate-900/95 backdrop-blur py-4 border-b border-indigo-500 mb-4">
+                        <h3 class="text-2xl font-bold text-white flex items-center">
+                            <span class="bg-indigo-600 text-white text-sm font-bold px-3 py-1 rounded-full mr-3 whitespace-nowrap shrink-0">DEN 1</span>
+                            Strategická expanze & Růst tržeb
+                        </h3>
+                        <p class="text-slate-400 text-sm mt-1 ml-14">(Čtvrtek)</p>
+                    </div>
+
+                    <!-- Block 1 -->
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden flex flex-col">
+                        <div class="p-6 pb-2">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="p-3 bg-indigo-50 rounded-lg text-indigo-600 border border-indigo-100 shrink-0"><i data-lucide="shield" class="w-6 h-6"></i></div>
+                                <div><h3 class="text-lg font-bold text-slate-900 leading-tight">Blok 1: Profesionální AI Řidičák</h3><p class="text-sm text-indigo-600 font-medium mt-1">Bezpečnost & Efektivita</p></div>
+                            </div>
+                            <div class="mb-4 relative pl-4 border-l-4 border-indigo-300"><p class="text-slate-600 italic text-sm">"95 % lidí používá AI jako hračku. My z ní uděláme pracovní nástroj."</p></div>
+                            <div class="mb-4"><h4 class="text-xs uppercase tracking-wider text-slate-500 font-bold mb-2 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-indigo-400"></span> Proč to potřebujete</h4><p class="text-slate-700 text-sm leading-relaxed">Přestaňte být "věčný začátečník". Zatímco konkurence tápe, vy získáte jistotu profesionála. Zbavíte se strachu z chyb a naučíte se AI ovládat tak, že vám bude zobat z ruky – bezpečně, rychle a přesně.</p></div>
+                        </div>
+                        <div class="px-6 pb-4">
+                            <button onclick="toggleAccordion('block-1')" class="w-full flex items-center justify-between py-2 px-4 bg-slate-50 hover:bg-slate-100 text-slate-600 text-sm font-medium rounded-lg transition-colors border border-slate-200">
+                                <span class="text-state-text">Zobrazit obsah</span> <i data-lucide="chevron-down" id="icon-block-1" class="w-4 h-4 chevron"></i>
+                            </button>
+                        </div>
+                        <div id="block-1" class="accordion-content px-6">
+                            <div class="pt-0 pb-6 border-t border-slate-100 mt-4">
+                                <h4 class="text-xs uppercase tracking-wider text-slate-500 font-bold mb-3">Obsah bloku:</h4>
+                                <ul class="space-y-3">
+                                    <li class="flex items-start text-slate-600 text-sm"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2.5 shrink-0 mt-0.5"></i> <span>7 principů profesionálního promptingu: Konkrétní techniky (např. Chain of Thought, Role-playing), které změní průměrné odpovědi na expertní výstupy.</span></li>
+                                    <li class="flex items-start text-slate-600 text-sm"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2.5 shrink-0 mt-0.5"></i> <span>Firemní bezpečnost dat: Praktický návod, jak nastavit AI nástroje tak, aby vaše know-how a citlivá data neunikla ke konkurenci.</span></li>
+                                    <li class="flex items-start text-slate-600 text-sm"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2.5 shrink-0 mt-0.5"></i> <span>Odstraňování chyb: Analýza nejčastějších důvodů, proč AI halucinuje nebo dává špatné výsledky, a jak tyto situace eliminovat.</span></li>
+                                </ul>
+                                <div class="mt-4 p-3 bg-emerald-50 border border-emerald-100 rounded-md"><span class="text-emerald-700 text-xs font-bold block mb-1">VÝSTUP:</span><p class="text-emerald-800 text-sm">Jistota, že nástroj ovládáte správně, bezpečně a efektivně.</p></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Block 2 -->
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden flex flex-col">
+                        <div class="p-6 pb-2">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="p-3 bg-indigo-50 rounded-lg text-indigo-600 border border-indigo-100 shrink-0"><i data-lucide="brain" class="w-6 h-6"></i></div>
+                                <div><h3 class="text-lg font-bold text-slate-900 leading-tight">Blok 2: Strategie & Konzultant v kapse</h3></div>
+                            </div>
+                            <div class="mb-4"><h4 class="text-xs uppercase tracking-wider text-slate-500 font-bold mb-2 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-indigo-400"></span> Proč to potřebujete</h4><p class="text-slate-700 text-sm leading-relaxed">Přestaňte pracovat VE firmě a začněte pracovat NA firmě. Získejte strategický vhled. Odhalte slepá místa svého byznysu dřív, než vás zbrzdí, a najděte nové cesty k zisku, které ostatní nevidí.</p></div>
+                        </div>
+                        <div class="px-6 pb-4">
+                            <button onclick="toggleAccordion('block-2')" class="w-full flex items-center justify-between py-2 px-4 bg-slate-50 hover:bg-slate-100 text-slate-600 text-sm font-medium rounded-lg transition-colors border border-slate-200">
+                                <span class="text-state-text">Zobrazit obsah</span> <i data-lucide="chevron-down" id="icon-block-2" class="w-4 h-4 chevron"></i>
+                            </button>
+                        </div>
+                        <div id="block-2" class="accordion-content px-6">
+                             <div class="pt-0 pb-6 border-t border-slate-100 mt-4">
+                                <h4 class="text-xs uppercase tracking-wider text-slate-500 font-bold mb-3">Obsah bloku:</h4>
+                                <ul class="space-y-3">
+                                    <li class="flex items-start text-slate-600 text-sm"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2.5 shrink-0 mt-0.5"></i> <span>Strategický audit s AI: Aplikace osvědčených metod na vaši firmu – stačí popsat vaši situaci a AI provede diagnózu.</span></li>
+                                    <li class="flex items-start text-slate-600 text-sm"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2.5 shrink-0 mt-0.5"></i> <span>Analýza trhu a konkurence: Ukážeme si, jak zmapovat trendy a slabiny konkurence pomocí veřejně dostupných dat.</span></li>
+                                    <li class="flex items-start text-slate-600 text-sm"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2.5 shrink-0 mt-0.5"></i> <span>Optimalizace procesů: Popíšete AI jeden svůj problematický proces (např. "jak schvalujeme faktury") a ona najde zbytečné kroky, které můžete zrušit.</span></li>
+                                </ul>
+                                <div class="mt-4 p-3 bg-emerald-50 border border-emerald-100 rounded-md"><span class="text-emerald-700 text-xs font-bold block mb-1">VÝSTUP:</span><p class="text-emerald-800 text-sm">Prvotní strategická analýza vaší firmy vytvořená za 30 minut místo týdnů.</p></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Block 3 -->
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden flex flex-col">
+                        <div class="p-6 pb-2">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="p-3 bg-indigo-50 rounded-lg text-indigo-600 border border-indigo-100 shrink-0"><i data-lucide="target" class="w-6 h-6"></i></div>
+                                <div><h3 class="text-lg font-bold text-slate-900 leading-tight">Blok 3: Marketing</h3><p class="text-sm text-indigo-600 font-medium mt-1">Povědomí & Chytrý zadavatel</p></div>
+                            </div>
+                            <div class="mb-4"><h4 class="text-xs uppercase tracking-wider text-slate-500 font-bold mb-2 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-indigo-400"></span> Proč to potřebujete</h4><p class="text-slate-700 text-sm leading-relaxed">Buďte vidět všude, aniž byste u toho trávili věčnost. Naučíte se tvořit obsah, který prodává, a dávat tak precizní zadání, že za své peníze dostanete dvojnásobný výkon.</p></div>
+                        </div>
+                        <div class="px-6 pb-4">
+                            <button onclick="toggleAccordion('block-3')" class="w-full flex items-center justify-between py-2 px-4 bg-slate-50 hover:bg-slate-100 text-slate-600 text-sm font-medium rounded-lg transition-colors border border-slate-200">
+                                <span class="text-state-text">Zobrazit obsah</span> <i data-lucide="chevron-down" id="icon-block-3" class="w-4 h-4 chevron"></i>
+                            </button>
+                        </div>
+                        <div id="block-3" class="accordion-content px-6">
+                            <div class="pt-0 pb-6 border-t border-slate-100 mt-4">
+                                <h4 class="text-xs uppercase tracking-wider text-slate-500 font-bold mb-3">Obsah bloku:</h4>
+                                <ul class="space-y-3">
+                                    <li class="flex items-start text-slate-600 text-sm"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2.5 shrink-0 mt-0.5"></i> <span>Hloubková profilace zákazníka: Tvorba detailních person a empatických map pomocí AI pro přesné cílení komunikace.</span></li>
+                                    <li class="flex items-start text-slate-600 text-sm"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2.5 shrink-0 mt-0.5"></i> <span>Obsahová strategie a exekuce: Generování kompletních publikačních plánů, psaní prodejních textů a tvorba vizuálů pro sociální sítě.</span></li>
+                                    <li class="flex items-start text-slate-600 text-sm"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2.5 shrink-0 mt-0.5"></i> <span>Kontrola kvality dodavatelů: Využití AI jako nezávislého auditora pro hodnocení kvality textů a výstupů od marketingových agentur.</span></li>
+                                </ul>
+                                <div class="mt-4 p-3 bg-emerald-50 border border-emerald-100 rounded-md"><span class="text-emerald-700 text-xs font-bold block mb-1">VÝSTUP:</span><p class="text-emerald-800 text-sm">„Marketingový startovací balíček“: Detailní persona vašeho ideálního klienta, vygenerovaný měsíční obsahový plán a precizní zadání (brief).</p></div>
+                            </div>
+                        </div>
+                    </div>
+
+                     <!-- Block 4 -->
+                     <div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden flex flex-col">
+                        <div class="p-6 pb-2">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="p-3 bg-indigo-50 rounded-lg text-indigo-600 border border-indigo-100 shrink-0"><i data-lucide="briefcase" class="w-6 h-6"></i></div>
+                                <div><h3 class="text-lg font-bold text-slate-900 leading-tight">Blok 4: Obchod</h3><p class="text-sm text-indigo-600 font-medium mt-1">Pochopení potřeb & Argumentace</p></div>
+                            </div>
+                            <div class="mb-4"><h4 class="text-xs uppercase tracking-wider text-slate-500 font-bold mb-2 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-indigo-400"></span> Proč to potřebujete</h4><p class="text-slate-700 text-sm leading-relaxed">Přestaňte střílet naslepo a začněte trefovat do černého. Představte si, že jdete na schůzku a víte o klientovi víc než on sám. Zvyšte svou úspěšnost díky přípravě, která trvá minuty, ale působí, jako byste na ní strávili dny.</p></div>
+                        </div>
+                        <div class="px-6 pb-4">
+                            <button onclick="toggleAccordion('block-4')" class="w-full flex items-center justify-between py-2 px-4 bg-slate-50 hover:bg-slate-100 text-slate-600 text-sm font-medium rounded-lg transition-colors border border-slate-200">
+                                <span class="text-state-text">Zobrazit obsah</span> <i data-lucide="chevron-down" id="icon-block-4" class="w-4 h-4 chevron"></i>
+                            </button>
+                        </div>
+                        <div id="block-4" class="accordion-content px-6">
+                            <div class="pt-0 pb-6 border-t border-slate-100 mt-4">
+                                <h4 class="text-xs uppercase tracking-wider text-slate-500 font-bold mb-3">Obsah bloku:</h4>
+                                <ul class="space-y-3">
+                                    <li class="flex items-start text-slate-600 text-sm"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2.5 shrink-0 mt-0.5"></i> <span>Příprava na jednání: Rychlá analýza digitální stopy klienta a identifikace jeho klíčových potřeb a bolestí před první schůzkou.</span></li>
+                                    <li class="flex items-start text-slate-600 text-sm"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2.5 shrink-0 mt-0.5"></i> <span>Simulátor vyjednávání: Interaktivní trénink zvládání námitek s AI v roli skeptického nákupčího pro zvýšení jistoty obchodníků.</span></li>
+                                    <li class="flex items-start text-slate-600 text-sm"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2.5 shrink-0 mt-0.5"></i> <span>Personalizace v měřítku: Tvorba vysoce personalizovaných oslovovacích e-mailů a nabídek pro desítky klientů současně.</span></li>
+                                </ul>
+                                <div class="mt-4 p-3 bg-emerald-50 border border-emerald-100 rounded-md"><span class="text-emerald-700 text-xs font-bold block mb-1">VÝSTUP:</span><p class="text-emerald-800 text-sm">Příprava k vašemu nejbližšímu jednání obsahující profil klienta, seznam protiargumentů na jeho námitky a sada vysoce personalizovaných e-mailů, které otevírají dveře.</p></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Networking Special -->
+                    <div class="bg-gradient-to-br from-amber-900/60 to-slate-800 rounded-xl p-6 border border-amber-700/50 mt-8 relative overflow-hidden">
+                        <div class="flex items-start gap-4 relative z-10">
+                            <div class="bg-amber-600/30 p-4 rounded-full border border-amber-500/30 shrink-0"><i data-lucide="coffee" class="w-8 h-8 text-amber-400"></i></div>
+                            <div>
+                                <h4 class="text-amber-400 font-bold text-sm tracking-wider uppercase mb-1">Networkingový speciál (Čtvrtek večer)</h4>
+                                <h3 class="text-xl font-bold text-white mb-3">"AI Lov pokladů & Pivo" (Prague Scavenger Hunt)</h3>
+                                <p class="text-slate-300 text-sm leading-relaxed mb-3">Neformální týmová hra v ulicích Prahy. Využijete AI v mobilu k řešení úkolů v reálném světě.</p>
+                                <p class="text-amber-200 text-sm font-medium">Cíl: Prolomit ledy, zažít "aha momenty" v terénu a získat kontakty na další podnikatele u piva.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COLUMN 2 - DAY 2 -->
+                <div class="space-y-6">
+                    <div class="sticky top-16 z-10 bg-slate-900/95 backdrop-blur py-4 border-b border-cyan-500 mb-4">
+                        <h3 class="text-2xl font-bold text-white flex items-center">
+                            <span class="bg-cyan-600 text-white text-sm font-bold px-3 py-1 rounded-full mr-3 whitespace-nowrap shrink-0">DEN 2</span>
+                            Firma na autopilota: Systém, Data & Automatizace
+                        </h3>
+                        <p class="text-slate-400 text-sm mt-1 ml-14">(Pátek)</p>
+                    </div>
+
+                    <!-- Block 5 -->
+                     <div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden flex flex-col">
+                        <div class="p-6 pb-2">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="p-3 bg-indigo-50 rounded-lg text-indigo-600 border border-indigo-100 shrink-0"><i data-lucide="zap" class="w-6 h-6"></i></div>
+                                <div><h3 class="text-lg font-bold text-slate-900 leading-tight">Blok 5: Realizace zakázky & Efektivita (Delivery)</h3></div>
+                            </div>
+                            <div class="mb-4"><h4 class="text-xs uppercase tracking-wider text-slate-500 font-bold mb-2 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-indigo-400"></span> Proč to potřebujete</h4><p class="text-slate-700 text-sm leading-relaxed">Dodejte slíbené dřív, než klient dopije kávu. Zbavte se chaosu v projektech a byrokracie, která brzdí váš tým. Získáte systém, díky kterému budou zakázky protékat firmou hladce, bez chyb a bez stresu.</p></div>
+                        </div>
+                        <div class="px-6 pb-4">
+                            <button onclick="toggleAccordion('block-5')" class="w-full flex items-center justify-between py-2 px-4 bg-slate-50 hover:bg-slate-100 text-slate-600 text-sm font-medium rounded-lg transition-colors border border-slate-200">
+                                <span class="text-state-text">Zobrazit obsah</span> <i data-lucide="chevron-down" id="icon-block-5" class="w-4 h-4 chevron"></i>
+                            </button>
+                        </div>
+                        <div id="block-5" class="accordion-content px-6">
+                            <div class="pt-0 pb-6 border-t border-slate-100 mt-4">
+                                <h4 class="text-xs uppercase tracking-wider text-slate-500 font-bold mb-3">Obsah bloku:</h4>
+                                <ul class="space-y-3">
+                                    <li class="flex items-start text-slate-600 text-sm"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2.5 shrink-0 mt-0.5"></i> <span>Ukážeme si, jak jednoduše nadiktovat postup práce a nechat AI, ať okamžitě vytvoří přehledný checklist pro vaše lidi. Zajistíte tak, že se zakázka zrealizuje správně, i když u toho nebudete.</span></li>
+                                    <li class="flex items-start text-slate-600 text-sm"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2.5 shrink-0 mt-0.5"></i> <span>Projektová administrativa: Automatizace tvorby zápisů z porad, zadávání úkolů a hlídání termínů pro hladký průběh zakázek.</span></li>
+                                    <li class="flex items-start text-slate-600 text-sm"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2.5 shrink-0 mt-0.5"></i> <span>Právní a technická analýza: Okamžitá kontrola smluv a technické dokumentace pro rychlejší rozhodování a úsporu nákladů na právní služby.</span></li>
+                                </ul>
+                                <div class="mt-4 p-3 bg-emerald-50 border border-emerald-100 rounded-md"><span class="text-emerald-700 text-xs font-bold block mb-1">VÝSTUP:</span><p class="text-emerald-800 text-sm">Transformátor porad - Prompt, do kterého vložíte surový přepis nebo audio z porady, a on vám okamžitě vygeneruje profesionální zápis pro klienta, seznam úkolů pro tým (kdo-co-do kdy) a termíny do kalendáře.</p></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Block 6 -->
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden flex flex-col">
+                        <div class="p-6 pb-2">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="p-3 bg-indigo-50 rounded-lg text-indigo-600 border border-indigo-100 shrink-0"><i data-lucide="users" class="w-6 h-6"></i></div>
+                                <div><h3 class="text-lg font-bold text-slate-900 leading-tight">Blok 6: AI Leadership (Řízení lidí)</h3></div>
+                            </div>
+                            <div class="mb-4"><h4 class="text-xs uppercase tracking-wider text-slate-500 font-bold mb-2 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-indigo-400"></span> Proč to potřebujete</h4><p class="text-slate-700 text-sm leading-relaxed">Staňte se šéfem, kterého lidé následují, ne jen poslouchají. Uvolněte si ruce od administrativy a věnujte se tomu nejdůležitějšímu – svým lidem. Naučte se vést tým s empatií podpořenou daty a řešit konflikty dřív, než vzniknou.</p></div>
+                        </div>
+                        <div class="px-6 pb-4">
+                            <button onclick="toggleAccordion('block-6')" class="w-full flex items-center justify-between py-2 px-4 bg-slate-50 hover:bg-slate-100 text-slate-600 text-sm font-medium rounded-lg transition-colors border border-slate-200">
+                                <span class="text-state-text">Zobrazit obsah</span> <i data-lucide="chevron-down" id="icon-block-6" class="w-4 h-4 chevron"></i>
+                            </button>
+                        </div>
+                        <div id="block-6" class="accordion-content px-6">
+                            <div class="pt-0 pb-6 border-t border-slate-100 mt-4">
+                                <h4 class="text-xs uppercase tracking-wider text-slate-500 font-bold mb-3">Obsah bloku:</h4>
+                                <ul class="space-y-3">
+                                    <li class="flex items-start text-slate-600 text-sm"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2.5 shrink-0 mt-0.5"></i> <span>Moderní nábor: Tvorba atraktivních inzerátů a strukturovaný onboarding nových zaměstnanců bez prázdných frází.</span></li>
+                                    <li class="flex items-start text-slate-600 text-sm"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2.5 shrink-0 mt-0.5"></i> <span>Zpětná vazba a hodnocení: Formulace konstruktivního a motivujícího hodnocení zaměstnanců s podporou AI.</span></li>
+                                    <li class="flex items-start text-slate-600 text-sm"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2.5 shrink-0 mt-0.5"></i> <span>AI Mentoring: Využití AI jako stínového kouče pro přípravu na náročné personální rozhovory a řešení konfliktů.</span></li>
+                                </ul>
+                                <div class="mt-4 p-3 bg-emerald-50 border border-emerald-100 rounded-md"><span class="text-emerald-700 text-xs font-bold block mb-1">VÝSTUP:</span><p class="text-emerald-800 text-sm">Manažerský „HR Asistent“: Hotový inzerát, který přitáhne talenty, struktura pro efektivní hodnotící pohovor a scénář pro vyřešení konkrétního konfliktu, který vás v týmu aktuálně pálí.</p></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Block 7 -->
+                     <div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden flex flex-col">
+                        <div class="p-6 pb-2">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="p-3 bg-indigo-50 rounded-lg text-indigo-600 border border-indigo-100 shrink-0"><i data-lucide="bar-chart" class="w-6 h-6"></i></div>
+                                <div><h3 class="text-lg font-bold text-slate-900 leading-tight">Blok 7: Datová analýza & Finance</h3></div>
+                            </div>
+                            <div class="mb-4"><h4 class="text-xs uppercase tracking-wider text-slate-500 font-bold mb-2 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-indigo-400"></span> Proč to potřebujete</h4><p class="text-slate-700 text-sm leading-relaxed">Vyměňte dojmy za tvrdá data a křišťálovou kouli za přesné predikce. Nechte AI, ať vám ukáže, kde vám utíkají peníze a kde leží skrytý zisk. Rozhodujte se s jistotou finančního ředitele.</p></div>
+                        </div>
+                        <div class="px-6 pb-4">
+                            <button onclick="toggleAccordion('block-7')" class="w-full flex items-center justify-between py-2 px-4 bg-slate-50 hover:bg-slate-100 text-slate-600 text-sm font-medium rounded-lg transition-colors border border-slate-200">
+                                <span class="text-state-text">Zobrazit obsah</span> <i data-lucide="chevron-down" id="icon-block-7" class="w-4 h-4 chevron"></i>
+                            </button>
+                        </div>
+                        <div id="block-7" class="accordion-content px-6">
+                             <div class="pt-0 pb-6 border-t border-slate-100 mt-4">
+                                <h4 class="text-xs uppercase tracking-wider text-slate-500 font-bold mb-3">Obsah bloku:</h4>
+                                <ul class="space-y-3">
+                                    <li class="flex items-start text-slate-600 text-sm"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2.5 shrink-0 mt-0.5"></i> <span>Interaktivní datová analýza: Naučíme vás "mluvit" s daty. Na vzorových souborech si ukážeme, jak najít trendy, aniž byste uměli složité vzorce.</span></li>
+                                    <li class="flex items-start text-slate-600 text-sm"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2.5 shrink-0 mt-0.5"></i> <span>Finanční modelování: Jak se ptát AI na scénáře "co kdyby" (např. "co když zvedneme ceny o 10 %?") a získat rychlou predikci.</span></li>
+                                    <li class="flex items-start text-slate-600 text-sm"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2.5 shrink-0 mt-0.5"></i> <span>Automatizace reportingu: Ukázka, jak přeměnit surová data na přehledný manažerský report na jedno kliknutí.</span></li>
+                                </ul>
+                                <div class="mt-4 p-3 bg-emerald-50 border border-emerald-100 rounded-md"><span class="text-emerald-700 text-xs font-bold block mb-1">VÝSTUP:</span><p class="text-emerald-800 text-sm">Interaktivní model, který vám na počkání spočítá dopady vašich rozhodnutí (scénáře „co když“), a šablona pro automatický manažerský report, který převede data z tabulek do srozumitelné češtiny.</p></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Block 8 -->
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden flex flex-col">
+                        <div class="p-6 pb-2">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="p-3 bg-indigo-50 rounded-lg text-indigo-600 border border-indigo-100 shrink-0"><i data-lucide="rocket" class="w-6 h-6"></i></div>
+                                <div><h3 class="text-lg font-bold text-slate-900 leading-tight">Blok 8: Automatizace (Praktická ukázka)</h3></div>
+                            </div>
+                            <div class="mb-4"><h4 class="text-xs uppercase tracking-wider text-slate-500 font-bold mb-2 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-indigo-400"></span> Proč to potřebujete</h4><p class="text-slate-700 text-sm leading-relaxed">Nechte roboty dělat práci robotů, vy se věnujte byznysu. Představte si firmu, která běží sama, i když vy spíte. Postavte si svého prvního digitálního kolegu, který nikdy neonemocní, nedělá chyby a pracuje 24/7 zadarmo.</p></div>
+                        </div>
+                        <div class="px-6 pb-4">
+                            <button onclick="toggleAccordion('block-8')" class="w-full flex items-center justify-between py-2 px-4 bg-slate-50 hover:bg-slate-100 text-slate-600 text-sm font-medium rounded-lg transition-colors border border-slate-200">
+                                <span class="text-state-text">Zobrazit obsah</span> <i data-lucide="chevron-down" id="icon-block-8" class="w-4 h-4 chevron"></i>
+                            </button>
+                        </div>
+                        <div id="block-8" class="accordion-content px-6">
+                             <div class="pt-0 pb-6 border-t border-slate-100 mt-4">
+                                <h4 class="text-xs uppercase tracking-wider text-slate-500 font-bold mb-3">Obsah bloku:</h4>
+                                <ul class="space-y-3">
+                                    <li class="flex items-start text-slate-600 text-sm"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2.5 shrink-0 mt-0.5"></i> <span>Úvod do no-code automatizace: Praktická ukázka v nástroji Make.com – jak propojit e-mail, AI a tabulky bez znalosti programování.</span></li>
+                                    <li class="flex items-start text-slate-600 text-sm"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2.5 shrink-0 mt-0.5"></i> <span>Stavba prvního robota: Společně postavíme funkční scénář (např. automatické třídění e-mailů nebo monitoring novinek), který si odnesete domů.</span></li>
+                                    <li class="flex items-start text-slate-600 text-sm"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2.5 shrink-0 mt-0.5"></i> <span>Kalkulace úspor: Reálná ukázka, kolik času a peněz ušetří konkrétní automatizace ve vaší firmě.</span></li>
+                                </ul>
+                                <div class="mt-4 p-3 bg-emerald-50 border border-emerald-100 rounded-md"><span class="text-emerald-700 text-xs font-bold block mb-1">VÝSTUP:</span><p class="text-emerald-800 text-sm">Reálně běžící automatizace (v Make.com), kterou si odnášíte nastavenou v počítači, spolu s kalkulací úspor, která prokáže návratnost investice do tohoto kurzu.</p></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Closing Section -->
+                    <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 mt-8">
+                        <h3 class="text-xl font-bold text-white mb-4 border-b border-slate-700 pb-2">Závěr & Certifikace</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start text-slate-300"><i data-lucide="check-circle" class="w-5 h-5 text-indigo-400 mr-3 mt-0.5"></i> <span>Předání prezentace pro tým ("Jak to zavedeme u nás").</span></li>
+                            <li class="flex items-start text-slate-300"><i data-lucide="check-circle" class="w-5 h-5 text-indigo-400 mr-3 mt-0.5"></i> <span>Diskuze o implementaci do vaší firmy v pondělí ráno.</span></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Value Proposition / Outputs -->
+    <section id="vystupy" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-slate-900">Co si odnesete (Hmatatelné výstupy)</h2>
+                <p class="mt-4 text-lg text-slate-600">Neodcházíte jen s "vědomostmi". Odnášíte si jistotu a balíček pro okamžitou akci:</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Certifikat -->
+                <div class="p-6 bg-slate-50 rounded-xl border border-slate-200">
+                    <i data-lucide="award" class="w-10 h-10 text-indigo-600 mb-4"></i>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Certifikát o složení zkoušky</h3>
+                    <p class="text-slate-600 text-sm">Důkaz vaší kompetence pro trh práce i interní kariéru ("kariérní pojistka").</p>
+                </div>
+
+                <!-- Databanka -->
+                <div class="p-6 bg-slate-50 rounded-xl border border-slate-200">
+                    <i data-lucide="database" class="w-10 h-10 text-purple-600 mb-4"></i>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Databanka promptů</h3>
+                    <p class="text-slate-600 text-sm">Přístup ke knihovně 100+ příkazů (promptů) a nástrojů, kterou neustále aktualizujeme.</p>
+                </div>
+
+                <!-- Mentoring -->
+                <div class="p-6 bg-indigo-50 rounded-xl border border-indigo-100 relative">
+                    <div class="absolute top-3 right-3 bg-indigo-200 text-indigo-800 text-[10px] font-bold px-2 py-0.5 rounded uppercase">VIP</div>
+                    <i data-lucide="message-square" class="w-10 h-10 text-indigo-700 mb-4"></i>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">1 hodina individuálního konzultace</h3>
+                    <p class="text-slate-600 text-sm">Čas s expertem jen pro vás, abyste probrali, co vás pálí.</p>
+                </div>
+
+                <!-- Prezentace -->
+                <div class="p-6 bg-slate-50 rounded-xl border border-slate-200">
+                    <i data-lucide="file-text" class="w-10 h-10 text-green-600 mb-4"></i>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Prezentace pro tým</h3>
+                    <p class="text-slate-600 text-sm">Hotové podklady, se kterými můžete přijít před své kolegy nebo šéfa a profesionálně odprezentovat: "Tohle jsem se naučil a takhle to změní naši firmu."</p>
+                </div>
+
+                <!-- Komunita -->
+                <div class="p-6 bg-slate-50 rounded-xl border border-slate-200 md:col-span-2 lg:col-span-1">
+                    <i data-lucide="users" class="w-10 h-10 text-blue-600 mb-4"></i>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Vstup do komunity GrowPORT</h3>
+                    <p class="text-slate-600 text-sm">Kontakty na lidi, kteří řeší stejné výzvy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing & CTA -->
+    <section id="cena" class="py-24 bg-indigo-900 text-white relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop')] bg-cover opacity-10 mix-blend-overlay"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-indigo-950/90 to-purple-900/90"></div>
+        
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="bg-white/5 backdrop-blur-xl rounded-3xl p-8 md:p-14 border border-white/10 text-center shadow-2xl">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">Investice do růstu vaší firmy</h2>
+                
+                <div class="flex flex-col items-center justify-center mb-10 bg-indigo-950/30 rounded-2xl py-8 border border-white/5 mt-8">
+                    <span class="text-5xl md:text-7xl font-extrabold text-white tracking-tight">
+                        19 900 Kč
+                    </span>
+                    <span class="text-indigo-300 mt-2 text-lg font-medium">za kompletní 2denní trénink</span>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-indigo-100 mb-12 max-w-2xl mx-auto">
+                    <div class="flex items-center justify-center gap-2 p-4 rounded-xl bg-white/5">
+                        <i data-lucide="map-pin" class="w-6 h-6 text-cyan-400"></i>
+                        <span class="font-semibold text-lg">Lokace: Praha</span>
+                    </div>
+                    <div class="flex items-center justify-center gap-2 p-4 rounded-xl bg-white/5">
+                        <i data-lucide="calendar" class="w-6 h-6 text-cyan-400"></i>
+                        <span class="font-semibold text-lg">2 dny plné praxe</span>
+                    </div>
+                </div>
+
+                <button class="w-full md:w-auto px-12 py-6 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xl rounded-xl shadow-xl shadow-cyan-900/20 transform hover:-translate-y-1 transition-all ring-1 ring-white/20">
+                    Závazně rezervovat místo
+                </button>
+                <p class="mt-8 text-indigo-200 text-lg font-medium">
+                    Přestaňte se bát, že vám ujede vlak. Naskočte do lokomotivy.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-500 py-12 border-t border-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center space-x-3 mb-4 md:mb-0">
+                <div class="bg-slate-800 p-2 rounded-lg">
+                    <i data-lucide="brain" class="h-6 w-6 text-indigo-500"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-bold text-slate-200">AI Akcelerátor</span>
+                    <span class="text-xs text-slate-600">Pro majitele a manažery</span>
+                </div>
+            </div>
+            <div class="text-sm">
+                &copy; 2025 AI Akcelerátor. Všechna práva vyhrazena.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Inicializace ikonek
+        lucide.createIcons();
+
+        // Jednoduchá funkce pro otevírání akordeonu
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            
+            // Toggle classes
+            if (content.classList.contains('open')) {
+                content.classList.remove('open');
+                icon.classList.remove('rotate');
+                // Change text back if needed (for agenda blocks)
+                const btnText = content.previousElementSibling.querySelector('.text-state-text');
+                if(btnText) btnText.textContent = "Zobrazit obsah";
+            } else {
+                content.classList.add('open');
+                icon.classList.add('rotate');
+                // Change text if needed
+                const btnText = content.previousElementSibling.querySelector('.text-state-text');
+                if(btnText) btnText.textContent = "Skrýt obsah";
+            }
+        }
+    </script>
+</body>
+</html>
